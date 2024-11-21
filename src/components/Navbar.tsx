@@ -19,8 +19,13 @@ function Navbar() {
             </>
           ) : (
             <>
-              <Link className="text-mobp lg:text-deskp" to="/">Home</Link>
-              <Link className="rounded-lg bg-emerald-600 px-6 py-2 text-mobp font-medium text-white lg:text-deskp lg:font-medium">
+              <Link className="text-mobp lg:text-deskp" to="/">
+                Home
+              </Link>
+              <Link
+                className="rounded-lg bg-emerald-600 px-6 py-2 text-mobp font-medium text-white lg:text-deskp lg:font-medium"
+                to="/login"
+              >
                 Login
               </Link>
             </>
