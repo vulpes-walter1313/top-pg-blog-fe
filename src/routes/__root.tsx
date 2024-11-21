@@ -13,7 +13,7 @@ function RootComponent() {
     <Navbar />
       <hr />
       <Outlet />
-      <TanStackRouterDevtools position="bottom-right" />
+      <TanStackRouterDevtools position="bottom-left" />
     </>
   )
 }
