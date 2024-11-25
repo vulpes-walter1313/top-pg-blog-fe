@@ -39,7 +39,7 @@ function HomeComponent() {
         {postsQuery.data &&
           postsQuery.data.posts != undefined &&
           postsQuery.data.posts.map((post: PostType) => (
-            <Link>
+            <Link to="/posts/$postSlug" params={{postSlug: post.slug}}>
               <article key={post.id} className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <h2 className="text-mobh3 lg:text-deskh3">
