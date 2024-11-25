@@ -11,7 +11,7 @@ export const getAuthCheck = async () => {
       Authorization: authToken,
     };
   }
-  const res = await fetch(`http://localhost:3000/authcheck`);
+  const res = await fetch(`http://localhost:3000/authcheck`, fetchOptions);
   if (!res.ok) {
     throw new Error("Error fetching auth status");
   }
