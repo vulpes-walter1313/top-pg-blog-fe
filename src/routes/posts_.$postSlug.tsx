@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAuthCheck, getPost, getPostComments } from "../libs/queries";
 import he from "he";
 import { DateTime } from "luxon";
 import CommentForm from "../components/CommentForm";
+import { deleteComment } from "../libs/mutations";
 
 export const Route = createFileRoute("/posts_/$postSlug")({
   component: PostPage,
@@ -16,11 +17,13 @@ type CommentType = {
   createdAt: string;
   updatedAt: string;
   author: {
+    id: string;
     firstName: string;
     lastName: string;
   };
 };
 function PostPage() {
+  const queryClient = useQueryClient();
   const params = Route.useParams();
   const userQuery = useQuery({
     queryKey: ["user"],
@@ -39,6 +42,15 @@ function PostPage() {
     queryFn: async () => {
       const data = await getPostComments(params.postSlug, commentsPage);
       return data;
+    },
+  });
+
+  const deleteCommentMuta = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["comments", params.postSlug],
+      });
     },
   });
   return (
@@ -84,11 +96,28 @@ function PostPage() {
                     <p className="text-mobsmp font-medium text-zinc-900 lg:text-deskp lg:font-medium">
                       {comment.author.firstName} {comment.author.lastName}
                     </p>
-                    <p className="text-mobxsp font-light text-zinc-600 lg:text-desksmp">
-                      {DateTime.fromISO(comment.updatedAt).toLocaleString(
-                        DateTime.DATETIME_MED,
+                    <div className="flex items-center gap-4">
+                      <p className="text-mobxsp font-light text-zinc-600 lg:text-desksmp">
+                        {DateTime.fromISO(comment.updatedAt).toLocaleString(
+                          DateTime.DATETIME_MED,
+                        )}
+                      </p>
+                      {(userQuery.data.user.isAdmin === true ||
+                        comment.author.id === userQuery.data.user.id) && (
+                        <button
+                          type="button"
+                          className="text-mobxsp text-red-700 underline lg:text-deskxsp"
+                          onClick={() =>
+                            deleteCommentMuta.mutate({
+                              postSlug: params.postSlug,
+                              commentId: comment.id,
+                            })
+                          }
+                        >
+                          Delete
+                        </button>
                       )}
-                    </p>
+                    </div>
                   </div>
                   <p className="text-mobp text-zinc-800 lg:text-deskp">
                     {he.decode(comment.content)}

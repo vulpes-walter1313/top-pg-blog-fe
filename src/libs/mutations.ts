@@ -65,3 +65,35 @@ export const postComment = async ({ slug, content }: PostCommentPayload) => {
   const data = await res.json();
   return data;
 };
+
+type DeleteCommentPayload = {
+  postSlug: string;
+  commentId: number;
+};
+export const deleteComment = async ({
+  postSlug,
+  commentId,
+}: DeleteCommentPayload) => {
+  const authToken = localStorage.getItem("auth_token");
+  const fetchOptions: RequestInit = {
+    method: "DELETE",
+    mode: "cors",
+  };
+  if (authToken) {
+    fetchOptions.headers = {
+      Authorization: authToken,
+    };
+  }
+  const res = await fetch(
+    `http://localhost:3000/posts/${postSlug}/comments/${commentId}`,
+    fetchOptions,
+  );
+  if (!res.ok) {
+    const data = await res.json();
+    const message = getErrorMessageFromReq(data);
+    throw new Error(message || "Error in deleting comment");
+  }
+
+  const data = await res.json();
+  return data;
+};
