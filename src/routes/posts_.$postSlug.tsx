@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
-import { getPost, getPostComments } from "../libs/queries";
+import { getAuthCheck, getPost, getPostComments } from "../libs/queries";
 import he from "he";
 import { DateTime } from "luxon";
+import CommentForm from "../components/CommentForm";
 
 export const Route = createFileRoute("/posts_/$postSlug")({
   component: PostPage,
@@ -21,6 +22,10 @@ type CommentType = {
 };
 function PostPage() {
   const params = Route.useParams();
+  const userQuery = useQuery({
+    queryKey: ["user"],
+    queryFn: getAuthCheck,
+  });
   const [commentsPage, setCommentsPage] = useState(1);
   const postQuery = useQuery({
     queryKey: ["post", params.postSlug],
@@ -63,6 +68,9 @@ function PostPage() {
               {commentsQuery.data.totalComments} Comments
             </h2>
           )}
+        {userQuery.isSuccess && userQuery.data.success === true && (
+          <CommentForm slug={params.postSlug} />
+        )}
         <div className="mx-auto flex max-w-2xl flex-col gap-4 pt-8">
           {commentsQuery.isSuccess &&
             commentsQuery.data.success === true &&
