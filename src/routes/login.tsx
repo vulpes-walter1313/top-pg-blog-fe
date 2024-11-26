@@ -56,6 +56,11 @@ function LoginPage() {
               className="rounded-lg border border-zinc-300 bg-white px-4 py-2 text-mobp text-zinc-600 shadow-sm lg:text-deskp"
               placeholder="your@email.com"
             />
+            {errors.email && (
+              <p className="rounded-md bg-red-100 p-4 text-mobp text-red-800 lg:text-deskp">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div className="flex flex-col gap-2">
             <label
@@ -71,6 +76,11 @@ function LoginPage() {
               className="rounded-lg border border-zinc-300 bg-white px-4 py-2 text-mobp text-zinc-700 shadow-sm lg:text-deskp"
               placeholder="password"
             />
+            {errors.password && (
+              <p className="rounded-md bg-red-100 p-4 text-mobp text-red-800 lg:text-deskp">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <button
             type="submit"
