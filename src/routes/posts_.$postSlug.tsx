@@ -102,8 +102,11 @@ function PostPage() {
                           DateTime.DATETIME_MED,
                         )}
                       </p>
-                      {(userQuery.data.user.isAdmin === true ||
-                        comment.author.id === userQuery.data.user.id) && (
+                      {((userQuery.data.user != undefined &&
+                        userQuery.data.user.isAdmin === true) ||
+                        (userQuery.data &&
+                          userQuery.data.user &&
+                          comment.author.id === userQuery.data.user.id)) && (
                         <button
                           type="button"
                           className="text-mobxsp text-red-700 underline lg:text-deskxsp"
