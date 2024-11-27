@@ -27,6 +27,12 @@ function Navbar() {
               <p className="text-mobp text-zinc-600 lg:text-deskp">
                 Hello, {data.user.firstName}
               </p>
+              <Link
+                to="/"
+                className="text-mobp text-zinc-600 hover:text-zinc-800 hover:underline lg:text-deskp"
+              >
+                Home
+              </Link>
               <button
                 onClick={() => logoutMutation.mutate()}
                 className="rounded-lg bg-emerald-600 px-6 py-2 text-mobp font-medium text-white lg:text-deskp lg:font-medium"
@@ -36,7 +42,10 @@ function Navbar() {
             </>
           ) : (
             <>
-              <Link className="text-mobp lg:text-deskp" to="/">
+              <Link
+                className="text-mobp text-zinc-600 hover:text-zinc-800 hover:underline lg:text-deskp"
+                to="/"
+              >
                 Home
               </Link>
               <Link
