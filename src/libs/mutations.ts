@@ -13,7 +13,10 @@ export const login = async ({ email, password }: LoginPayload) => {
       "Content-Type": "application/json",
     },
   };
-  const res = await fetch(`http://localhost:3000/login`, fetchOptions);
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/login`,
+    fetchOptions,
+  );
   if (!res.ok) {
     const data = await res.json();
     const message = getErrorMessageFromReq(data);
@@ -53,7 +56,7 @@ export const postComment = async ({ slug, content }: PostCommentPayload) => {
   }
 
   const res = await fetch(
-    `http://localhost:3000/posts/${slug}/comments`,
+    `${import.meta.env.VITE_BACKEND_URL}/posts/${slug}/comments`,
     fetchOptions,
   );
   if (!res.ok) {
@@ -85,7 +88,7 @@ export const deleteComment = async ({
     };
   }
   const res = await fetch(
-    `http://localhost:3000/posts/${postSlug}/comments/${commentId}`,
+    `${import.meta.env.VITE_BACKEND_URL}/posts/${postSlug}/comments/${commentId}`,
     fetchOptions,
   );
   if (!res.ok) {
@@ -127,7 +130,10 @@ export const registerUser = async ({
     },
   };
 
-  const res = await fetch(`http://localhost:3000/register`, fetchOptions);
+  const res = await fetch(
+    `${import.meta.env.VITE_BACKEND_URL}/register`,
+    fetchOptions,
+  );
   if (!res.ok) {
     const data = await res.json();
     const message = getErrorMessageFromReq(data);
