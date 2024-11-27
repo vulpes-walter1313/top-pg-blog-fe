@@ -97,3 +97,42 @@ export const deleteComment = async ({
   const data = await res.json();
   return data;
 };
+
+type RegisterUserPayload = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
+export const registerUser = async ({
+  firstName,
+  lastName,
+  email,
+  password,
+  confirmPassword,
+}: RegisterUserPayload) => {
+  const fetchOptions: RequestInit = {
+    method: "POST",
+    mode: "cors",
+    body: JSON.stringify({
+      firstName,
+      lastName,
+      email,
+      password,
+      confirmPassword,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  const res = await fetch(`http://localhost:3000/register`, fetchOptions);
+  if (!res.ok) {
+    const data = await res.json();
+    const message = getErrorMessageFromReq(data);
+    throw new Error(message ?? "Error in registering user");
+  }
+  const data = await res.json();
+  return data;
+};
