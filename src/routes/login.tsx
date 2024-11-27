@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { login } from "../libs/mutations";
@@ -35,12 +35,20 @@ function LoginPage() {
   return (
     <div className="min-h-screen bg-zinc-50 text-zinc-950">
       <div className="flex flex-col gap-12 py-14">
-        <h1 className="text-center text-mobh1 text-zinc-900 lg:text-deskh1">
-          Login
-        </h1>
+        <div className="flex flex-col gap-6">
+          <h1 className="text-center text-mobh1 text-zinc-900 lg:text-deskh1">
+            Login
+          </h1>
+          <p className="text-center text-mobp text-zinc-800 lg:text-deskp">
+            Don&apos;t have an account?{" "}
+            <Link to="/register" className="text-emerald-700 underline">
+              Register Here
+            </Link>
+          </p>
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="mx-auto flex w-full max-w-md flex-col gap-4 rounded-lg border border-zinc-300 bg-zinc-50 p-4 shadow-md"
+          className="mx-auto flex w-full max-w-md flex-col gap-4 rounded-lg border border-zinc-300 bg-white p-4 shadow-md"
         >
           <div className="flex flex-col gap-2">
             <label
