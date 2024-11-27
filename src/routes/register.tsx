@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { registerUser } from "../libs/mutations";
 import { useState } from "react";
@@ -43,7 +43,15 @@ function RegisterPage() {
   return (
     <div className="min-h-screen bg-zinc-50 font-sans text-zinc-950">
       <div className="mx-auto flex max-w-4xl flex-col items-center gap-10 pt-8">
-        <h1 className="text-mobh1 lg:text-deskh1">Register</h1>
+        <div className="flex flex-col items-center gap-6">
+          <h1 className="text-mobh1 lg:text-deskh1">Register</h1>
+          <p className="text-mobp text-zinc-800 lg:text-deskp">
+            Already have an account?{" "}
+            <Link to="/login" className="text-emerald-700 underline">
+              Login here.
+            </Link>
+          </p>
+        </div>
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="flex w-full max-w-md flex-col gap-4 rounded-lg border border-zinc-300 bg-white p-6 shadow-md"
